@@ -1,13 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
+    "build": "npx nuxt build",
+    "dev": "npx nuxt dev",
+    "generate": "npx nuxt generate",
+    "preview": "npx nuxt preview",
+    "postinstall": "npx nuxt prepare",
     "lint": "eslint --max-warnings 0 .",
-    "typecheck": "nuxt typecheck",
+    "typecheck": "npx nuxt typecheck",
     "start": "NODE_ENV=production node .output/server/index.mjs"
   },
   "devDependencies": {
