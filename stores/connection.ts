@@ -40,6 +40,7 @@ export const useConnectionStore = defineStore('connection', () => {
 
   const sendItemChange = (item: TItem) => {
     $io.emit('itemChange', currentRoom.value?.id, item)
+    updateLocalItem(item)
   }
 
   const onMessage = (message: string) => {
@@ -60,7 +61,6 @@ export const useConnectionStore = defineStore('connection', () => {
         item.x = data.item.x
         item.y = data.item.y
         item.content = data.item.content
-        currentRoom.value.items.splice(index, 1, item)
       }
     })
 
@@ -84,6 +84,12 @@ export const useConnectionStore = defineStore('connection', () => {
     })
   })
 
+  const updateLocalItem = (item: TItem) => {
+    if (currentRoom.value) {
+      const index = currentRoom.value.items.findIndex(t => t.id === item.id)
+      currentRoom.value.items[index] = item
+    }
+  }
   return {
     currentRoom,
     name,
@@ -94,6 +100,7 @@ export const useConnectionStore = defineStore('connection', () => {
     sendItemChange,
     setName,
     addItem,
-    removeItem
+    removeItem,
+    updateLocalItem
   }
 })

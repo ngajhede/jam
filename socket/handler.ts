@@ -1,6 +1,8 @@
 import { Server } from 'socket.io'
+import { nanoid } from 'nanoid'
 import type { TRoom, TUser } from '~/types'
 import { Stickynote } from '~/utils/items'
+
 const io = new Server(3001, {
   cors: {
     origin: '*'
@@ -68,7 +70,7 @@ io.on('connect', (socket) => {
     if (board) {
       const newItem = {
         ...Stickynote,
-        id: Math.random().toString(36).substr(2, 9)
+        id: nanoid(6)
       }
       board.items.push(newItem)
       io.to(room).emit('itemAdded', newItem)
@@ -88,6 +90,7 @@ io.on('connect', (socket) => {
   })
 
   socket.on('itemChange', function (room, item) {
+    console.log(`[Socket.io] item change in ${room}: ${item}`)
     const board = rooms.find(t => t.id === room)
     if (board) {
       const index = board.items.findIndex(t => t.id === item.id)
