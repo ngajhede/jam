@@ -11,7 +11,6 @@ export const useConnectionStore = defineStore('connection', () => {
   const messages = ref<string[]>([])
 
   const joinRoom = (room: string) => {
-    console.log('joinRoom', room)
     $io.emit('joinRoom', { room, user: { name: name.value } })
   }
 
@@ -34,7 +33,6 @@ export const useConnectionStore = defineStore('connection', () => {
   }
 
   const removeItem = (item: TItem) => {
-    console.log('removeItem', item)
     $io.emit('removeItem', currentRoom.value?.id, item)
   }
 

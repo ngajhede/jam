@@ -21,7 +21,6 @@ io.on('connect', (socket) => {
   socket.broadcast.emit('message', `${socket.id} joined`)
 
   socket.on('joinRoom', (data) => {
-    console.log('joinRoom', data)
     socket.join(data.room)
     io.to(data.room).emit('join', {
       from_id: socket.id,
@@ -100,7 +99,6 @@ io.on('connect', (socket) => {
   })
 
   socket.on('setName', (name) => {
-    console.log('setName', name)
     const user = users.find(t => t.id === socket.id)
     if (user) {
       user.name = name

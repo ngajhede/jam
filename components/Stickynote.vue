@@ -10,7 +10,6 @@
     </div>
     <div class="py-1">
       <textarea v-model="content" class="w-full h-32 resize-none bg-transparent focus:outline-none" />
-      {{ props.item.content }}
     </div>
     <div class="text-zinc-700 absolute bottom-2 right-3 left-3">
       <div class="flex items-center justify-between w-full">
@@ -32,7 +31,7 @@ import { Types, type TItem } from '@/types'
 const props = defineProps<{
   item: TItem
 }>()
-const { sendItemChange, removeItem, updateLocalItem } = useConnectionStore()
+const { sendItemChange, removeItem } = useConnectionStore()
 
 const el = ref<HTMLElement | null>(null)
 const handle = ref<HTMLElement | null>(null)
