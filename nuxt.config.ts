@@ -15,6 +15,11 @@ export default defineNuxtConfig({
   },
   typescript: {
     shim: false
-  }
-
+  },
+  serverHandlers: [
+    {
+      route: '/ws',
+      handler: '~/socket/handler'
+    }
+  ]
 })
