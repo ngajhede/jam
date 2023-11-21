@@ -16,10 +16,9 @@ export default defineNuxtConfig({
   typescript: {
     shim: false
   },
-  serverHandlers: [
-    {
-      route: '/ws',
-      handler: '~/socket/handler'
+  runtimeConfig: {
+    public: {
+      socketIOUrl: process.env.SOCKET_IO_URL
     }
-  ]
+  }
 })

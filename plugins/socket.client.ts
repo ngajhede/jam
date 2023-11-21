@@ -1,9 +1,11 @@
 import { io } from 'socket.io-client'
 
-// Socket Client
-const socket = io('http://localhost:3001')
+export default defineNuxtPlugin((nuxtApp) => {
+  const config = useRuntimeConfig()
+  const host = config.public.socketIOUrl
 
-export default defineNuxtPlugin(() => {
+  const socket = io(host)
+
   return {
     provide: {
       io: socket
