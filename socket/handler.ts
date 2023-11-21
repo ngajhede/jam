@@ -122,7 +122,7 @@ io.on('connect', (socket) => {
   })
 })
 
-export default function (req, res, next) {
+export default fromNodeMiddleware(() => (req, res, next) => {
   res.statusCode = 200
   res.end()
-}
+})
