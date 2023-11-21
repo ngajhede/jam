@@ -57,18 +57,27 @@ const { x: dx, y: dy, style, isDragging } = useDraggable(el, {
   handle
 })
 
+const position = computed({
+  get () {
+    return { x: dx.value, y: dy.value }
+  },
+  set (value) {
+    const { x, y } = value
+    sendItemChange({
+      id: props.item.id,
+      type: Types.Stickynote,
+      content: content.value,
+      x,
+      y
+    })
+  }
+})
+
 watch([dx, dy], ([x, y], [oldX, oldY]) => {
-  sendItemChange({
-    id: props.item.id,
-    type: Types.Stickynote,
-    content: content.value,
-    x,
-    y
-  })
+  position.value = { x, y }
 })
 
 watchEffect(() => {
-  if (isDragging.value) { return }
   dx.value = props.item.x
   dy.value = props.item.y
 })
