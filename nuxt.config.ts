@@ -8,6 +8,9 @@ export default defineNuxtConfig({
   css: [
     '~/assets/main.scss'
   ],
+  auth: {
+    origin: 'http://localhost:3000'
+  },
   build: {
     transpile: [
       'trpc-nuxt'
