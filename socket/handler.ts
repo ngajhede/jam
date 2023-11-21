@@ -1,4 +1,5 @@
 import { Server } from 'socket.io'
+import type { TRoom, TUser } from '~/types'
 
 const io = new Server(3001, {
   cors: {
@@ -6,33 +7,8 @@ const io = new Server(3001, {
   }
 })
 
-type TItem = {
-  id: string
-  type: 'Stickynote',
-  content: string
-  x: number
-  y: number
-}
-
-const boards: {
-  id: string
-  name: string
-  items: TItem[]
-  users: string[]
-}[] = [
-  {
-    id: 'room1',
-    name: 'room1',
-    items: [{
-      id: '1',
-      type: 'Stickynote',
-      content: 'Hello World',
-      x: 100,
-      y: 100
-    }],
-    users: []
-  }
-]
+const rooms: TRoom[] = []
+const users: TUser[] = []
 
 io.on('connection', (socket) => {
   console.log('Connection', socket.id)
@@ -42,24 +18,24 @@ io.on('connect', (socket) => {
   socket.emit('message', `welcome ${socket.id}`)
   socket.broadcast.emit('message', `${socket.id} joined`)
 
-  socket.on('joinRoom', (room) => {
-    console.log('joinRoom', room)
-    socket.join(room)
-    io.to(room).emit('join', {
+  socket.on('joinRoom', (data) => {
+    console.log('joinRoom', data)
+    socket.join(data.room)
+    io.to(data.room).emit('join', {
       from_id: socket.id,
       system: true,
       content: `${socket.id} joined the jam session`
     })
 
-    const board = boards.find(t => t.id === room)
+    const board = rooms.find(t => t.id === data.room)
     if (board) {
-      board.users.push(socket.id)
+      board.users.push({ name: data.user.name, id: socket.id })
     } else {
-      boards.push({
-        id: room,
-        name: room,
+      rooms.push({
+        id: data.room,
+        name: data.room,
         items: [],
-        users: [socket.id]
+        users: [{ name: data.user.name, id: socket.id }]
       })
     }
 
@@ -77,7 +53,7 @@ io.on('connect', (socket) => {
 
   socket.on('message', function (room, message) {
     console.log(`[Socket.io] message received in ${room}: ${message}`)
-    const board = boards.find(t => t.id === room)
+    const board = rooms.find(t => t.id === room)
     if (board) {
       io.to(room).emit('message', message)
       // Write to DB
@@ -86,7 +62,7 @@ io.on('connect', (socket) => {
 
   socket.on('add', function (room, item) {
     console.log(`[Socket.io] add item in ${room}: ${item}`)
-    const board = boards.find(t => t.id === room)
+    const board = rooms.find(t => t.id === room)
     if (board) {
       board.items.push(item)
       io.to(room).emit('add', item)
@@ -95,12 +71,24 @@ io.on('connect', (socket) => {
   })
 
   socket.on('itemChange', function (room, item) {
-    const board = boards.find(t => t.id === room)
+    const board = rooms.find(t => t.id === room)
     if (board) {
       const index = board.items.findIndex(t => t.id === item.id)
       board.items[index] = item
       socket.broadcast.to(room).emit('changedItem', { room, item })
     }
+  })
+
+  socket.on('setName', (name) => {
+    console.log('setName', name)
+    const user = users.find(t => t.id === socket.id)
+    if (user) {
+      user.name = name
+    } else {
+      users.push({ id: socket.id, name })
+    }
+
+    socket.broadcast.emit('message', `${socket.id} is now known as ${name}`)
   })
 
   socket.on('disconnecting', () => {

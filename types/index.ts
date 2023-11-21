@@ -5,3 +5,15 @@ export type TItem = {
   x: number
   y: number
 }
+
+export type TUser = {
+  id: string
+  name: string
+}
+
+export type TRoom = {
+  id: string
+  name: string
+  items: TItem[]
+  users: TUser[]
+}
