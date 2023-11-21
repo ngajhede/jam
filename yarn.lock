@@ -905,7 +905,7 @@
     which "^3.0.1"
     ws "^8.14.2"
 
-"@nuxt/kit@3.8.2", "@nuxt/kit@^3.3.3", "@nuxt/kit@^3.5.0", "@nuxt/kit@^3.7.4", "@nuxt/kit@^3.8.0", "@nuxt/kit@^3.8.1":
+"@nuxt/kit@3.8.2", "@nuxt/kit@^3.3.3", "@nuxt/kit@^3.5.0", "@nuxt/kit@^3.7.4", "@nuxt/kit@^3.8.1", "@nuxt/kit@^3.8.2":
   version "3.8.2"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.8.2.tgz#f4548f3449d2566dbd2febe2b84f47060f7c668c"
   integrity sha512-LrXCm8hAkw+zpX8teUSD/LqXRarlXjbRiYxDkaqw739JSHFReWzBFgJbojsJqL4h1XIEScDGGOWiEgO4QO1sMg==
@@ -1054,11 +1054,11 @@
     local-pkg "^0.4.2"
 
 "@nuxtjs/tailwindcss@^6.8.0":
-  version "6.9.5"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/tailwindcss/-/tailwindcss-6.9.5.tgz#57474ef4c07bdeedf23597c92d822a194b8db81b"
-  integrity sha512-Q1jMY06KdK7f6IAL25HFWK0ZhTNaxyl/J0fhX3k0kjKojeflU6AbJTTKeVn9Dhqqt71y1thZqemuZNeJha+RBA==
+  version "6.10.0"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/tailwindcss/-/tailwindcss-6.10.0.tgz#148616ace4a5afb333a8e649a41d9408caad099d"
+  integrity sha512-frPkCDKTJsiMDuAYqH5GgtBWexTAmHqFTjTi8DBhGIhZo3C4RxpKH5xnTW6rKMz37Zicre6p+tmkZjKQDl09pQ==
   dependencies:
-    "@nuxt/kit" "^3.8.0"
+    "@nuxt/kit" "^3.8.2"
     "@nuxt/postcss8" "^1.1.3"
     autoprefixer "^10.4.16"
     chokidar "^3.5.3"
@@ -1067,7 +1067,7 @@
     cookie-es "^1.0.0"
     defu "^6.1.3"
     destr "^2.0.2"
-    h3 "^1.8.2"
+    h3 "^1.9.0"
     iron-webcrypto "^1.0.0"
     micromatch "^4.0.5"
     pathe "^1.1.1"
@@ -1077,7 +1077,7 @@
     radix3 "^1.1.0"
     tailwind-config-viewer "^1.7.3"
     tailwindcss "~3.3.5"
-    ufo "^1.3.1"
+    ufo "^1.3.2"
     uncrypto "^0.1.3"
 
 "@panva/hkdf@^1.0.2":
@@ -1411,14 +1411,14 @@
   integrity sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==
 
 "@trpc/client@^10.40.0":
-  version "10.43.6"
-  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-10.43.6.tgz#b2b2036306e25ee50ac91634a43133d167ad0aec"
-  integrity sha512-gQSxCQgPeBn/wqBEScu5Nq9UKqA16e965vWBj+BbdvI4URV72T44/yg0cl/E6xtBgycCVwdzwn7CuZaM8FA/VQ==
+  version "10.43.7"
+  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-10.43.7.tgz#35b93b72787d525bce5a52498c47575111c50c7d"
+  integrity sha512-dnZdHGrN6jZ6CO+stgGsM5M+A1iFYh/W5iuNs7O3sm0jX5I2/U26dSQrMuCu2PZxhl3MUC/i/PU4G8uS8/vcOw==
 
 "@trpc/server@^10.40.0":
-  version "10.43.6"
-  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-10.43.6.tgz#69c999144fd8281ff37bf5c1224138c99d989e73"
-  integrity sha512-ziN7UXGAycxe4i3FwJstTe6jzCcKBlPociCrC9XtfPzFpMTf0hNbRQQlFiZjJk23ZGQSVYDjk9RO4yIHt94mJg==
+  version "10.43.7"
+  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-10.43.7.tgz#1f8b65c3cb04de31b6b23aad9aa8aa6661fc98f2"
+  integrity sha512-i02zxH9ypeSrld6CAYdqwDJEAcnWvTZ8k3f5vWoi5dB7Qxw6dyxyLQY4ioV5D9cRJk6kBUJqEWc1lK0/SwUncg==
 
 "@trysound/sax@0.2.0":
   version "0.2.0"
@@ -1601,46 +1601,46 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@unhead/dom@1.8.5", "@unhead/dom@^1.8.4":
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/@unhead/dom/-/dom-1.8.5.tgz#e499db03815f6ccccab8a902fbf7d53d8b9c7abd"
-  integrity sha512-CLgOw5mF9Moo29z2SwNrJcdX75pPEJxoNpxbrlf3BctwpZJV19MMyxp9HaG9yAYLNTrYIsHjma/dZ2I0184StA==
+"@unhead/dom@1.8.7", "@unhead/dom@^1.8.4":
+  version "1.8.7"
+  resolved "https://registry.yarnpkg.com/@unhead/dom/-/dom-1.8.7.tgz#625434554878811a4d51daef195a650c74e48c4a"
+  integrity sha512-+ok3Nl5X8+lQClfQOcc0+OQEowJ1f5OnNctrAAnECNlR1tfUkvq+MeIPxITbiK0QBH1+/bhJsmy9huhBQnOEFQ==
   dependencies:
-    "@unhead/schema" "1.8.5"
-    "@unhead/shared" "1.8.5"
+    "@unhead/schema" "1.8.7"
+    "@unhead/shared" "1.8.7"
 
-"@unhead/schema@1.8.5":
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/@unhead/schema/-/schema-1.8.5.tgz#a63d074f83ea7dda268493137325512dd55bbe50"
-  integrity sha512-Ui/0r1VI9fM5RjjJJhzz/C7lvey+gNy2ZuSvSvL7jE3/w+CfBwdp5Vw+3jHVhr5JKKOFzzYeBL0b4lk/mmYF7w==
+"@unhead/schema@1.8.7":
+  version "1.8.7"
+  resolved "https://registry.yarnpkg.com/@unhead/schema/-/schema-1.8.7.tgz#9cef3b41b551558d2166a4199ef08f302ebc8da0"
+  integrity sha512-7JBE8D5wCo2sb4BSaNhk7fkPnzi/6PYh4K+elPVvMtvwPJlctJI1ZTF1bLXxJzSv8FSrAIA7toOeNHUkWNj7Aw==
   dependencies:
     hookable "^5.5.3"
     zhead "^2.2.4"
 
-"@unhead/shared@1.8.5":
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/@unhead/shared/-/shared-1.8.5.tgz#8f5bdb64e851bd2b38e1960dc87f6dd8c7fe820e"
-  integrity sha512-2yckMljMlYWvzO4l3ZOcTdZJPi2CjUyuS/zy/eHK4ZHTvcRzc9igKSDKBon6wnWK/WDjwryZBdPUrN/mjRMmWg==
+"@unhead/shared@1.8.7":
+  version "1.8.7"
+  resolved "https://registry.yarnpkg.com/@unhead/shared/-/shared-1.8.7.tgz#c9f6a70c06611573dc567981d069cdcda4ca7d27"
+  integrity sha512-312MguOHCiHQ+5xBShXpU99VLADnSRBPhkfWSreqU32innwH1Kcedslc79VS0s8m8Uje6q3+dVH23AW3oAH0uA==
   dependencies:
-    "@unhead/schema" "1.8.5"
+    "@unhead/schema" "1.8.7"
 
 "@unhead/ssr@^1.8.4":
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/@unhead/ssr/-/ssr-1.8.5.tgz#06157ad08caf1ade5a0517ad93357de96fbec559"
-  integrity sha512-RG2OHLR5Jy4FOXj9+YvQr6mx7MZuoALQFQXn/8z0Nb1SM4Aipt5GY1Aeh8bk6Gd+g5BbiqOqmJNumvgdKOPm5w==
+  version "1.8.7"
+  resolved "https://registry.yarnpkg.com/@unhead/ssr/-/ssr-1.8.7.tgz#0a0ebb060d75f87f89a04596877db5c86ace310f"
+  integrity sha512-EOs5NInFi5A0ge7kNCwARK1JomytWpQAT0OWuAT1FH/M5kvtsfBS0LiUjf1yCpANNQ8h6xBtuhzGiSwq/eNVZA==
   dependencies:
-    "@unhead/schema" "1.8.5"
-    "@unhead/shared" "1.8.5"
+    "@unhead/schema" "1.8.7"
+    "@unhead/shared" "1.8.7"
 
 "@unhead/vue@^1.8.4":
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/@unhead/vue/-/vue-1.8.5.tgz#bdb694410d9a5da9b98560f2f538c1476a91d3e4"
-  integrity sha512-m8Q1U1JJvn5LKI5tGRh6f0Of0R64szZN7AXfRN8zTumf6HuOAdg6bHEX+lUX3wtRLUAPzrM9Oz4r0nTqIa9Oow==
+  version "1.8.7"
+  resolved "https://registry.yarnpkg.com/@unhead/vue/-/vue-1.8.7.tgz#64419ad1b76499e39b01e06326185742ae70cd95"
+  integrity sha512-M/yECV0Usa+Gc/YxHl4Waq/9yBZLPh5qtz8N8j82OiE1vr2eVcYGN0sHne1CjtytDt9TL80wooUU57CrSDmziA==
   dependencies:
-    "@unhead/schema" "1.8.5"
-    "@unhead/shared" "1.8.5"
+    "@unhead/schema" "1.8.7"
+    "@unhead/shared" "1.8.7"
     hookable "^5.5.3"
-    unhead "1.8.5"
+    unhead "1.8.7"
 
 "@vercel/nft@^0.24.3":
   version "0.24.3"
@@ -2179,9 +2179,9 @@ base64id@2.0.0, base64id@~2.0.0:
   integrity sha512-lGe34o6EHj9y3Kts9R4ZYs/Gr+6N7MCaMlIFA3F1R2O5/m7K06AxfSeO5530PEERE6/WyEg3lsuyw4GHlPZHog==
 
 big-integer@^1.6.44:
-  version "1.6.51"
-  resolved "https://registry.yarnpkg.com/big-integer/-/big-integer-1.6.51.tgz#0df92a5d9880560d3ff2d5fd20245c889d130686"
-  integrity sha512-GPEid2Y9QU1Exl1rpO9B2IPJGHPSupF5GnVIP0blYvNOMer2bTvSWs1jGOUg04hTmu67nmLsQ9TBo1puaotBHg==
+  version "1.6.52"
+  resolved "https://registry.yarnpkg.com/big-integer/-/big-integer-1.6.52.tgz#60a887f3047614a8e1bffe5d7173490a97dc8c85"
+  integrity sha512-QxD8cf2eVqJOOz63z6JIN9BzvVs/dlySa5HGSBH5xtR8dPteIRQnBxxKqkNTiT6jbDTF6jAfrd4oMcND9RGbQg==
 
 big.js@^5.2.2:
   version "5.2.2"
@@ -5516,7 +5516,7 @@ nuxi@^3.10.0:
   optionalDependencies:
     fsevents "~2.3.3"
 
-nuxt@^3.7.4:
+nuxt@^3.8.2:
   version "3.8.2"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-3.8.2.tgz#6db515d41e7745c725be7f34f692bdeabc53da07"
   integrity sha512-HUAyifmqTs2zcQBGvcby3KNs2pBAk+l7ZbLjD1oCNqQQ+wBuZ1qgLC4Ebu++y4g3o3Y8WAWSvpafbKRLQZziPw==
@@ -7554,14 +7554,14 @@ unenv@^1.7.4:
     node-fetch-native "^1.4.0"
     pathe "^1.1.1"
 
-unhead@1.8.5:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/unhead/-/unhead-1.8.5.tgz#16bbb4f3bb48c707767c009e49f70abf6a86526c"
-  integrity sha512-h8bTzI8tJQKD0nWYXtLEWD5TTsXhaT034bcxtY9yY77hjyxi/HYL0a/FYebBLVvY02HsWgENahO6rKPTvDRhig==
+unhead@1.8.7:
+  version "1.8.7"
+  resolved "https://registry.yarnpkg.com/unhead/-/unhead-1.8.7.tgz#0960a24bd13ffbf1c8346af03937835f745ef956"
+  integrity sha512-IugMShXw6K6XWGubLOyzxg8vibQBRUDPUV4GbkRf9xYmrYFQMq3Fc9Zh1d4NkGgO1TtwVGZ0wZhWFmXZJ+14rQ==
   dependencies:
-    "@unhead/dom" "1.8.5"
-    "@unhead/schema" "1.8.5"
-    "@unhead/shared" "1.8.5"
+    "@unhead/dom" "1.8.7"
+    "@unhead/schema" "1.8.7"
+    "@unhead/shared" "1.8.7"
     hookable "^5.5.3"
 
 unicorn-magic@^0.1.0:
