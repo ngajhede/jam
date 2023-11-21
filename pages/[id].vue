@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Toolbar class="absolute z-10" />
+    <Userlist class="absolute z-10 top-6 right-0" />
     <div v-if="currentRoom && currentRoom.items.length" class="relative">
       <Stickynote
         v-for="item in currentRoom.items"

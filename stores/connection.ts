@@ -15,8 +15,8 @@ export const useConnectionStore = defineStore('connection', () => {
     $io.emit('joinRoom', { room, user: { name: name.value } })
   }
 
-  const leaveRoom = (room: string) => {
-    $io.emit('leaveRoom', room)
+  const leaveRoom = () => {
+    $io.emit('leaveRoom', currentRoom.value?.id)
     currentRoom.value = undefined
   }
 
@@ -27,6 +27,15 @@ export const useConnectionStore = defineStore('connection', () => {
   const setName = (newName: string) => {
     $io.emit('setName', name)
     name.value = newName
+  }
+
+  const addItem = (item: TItem['type']) => {
+    $io.emit('addItem', currentRoom.value?.id, item)
+  }
+
+  const removeItem = (item: TItem) => {
+    console.log('removeItem', item)
+    $io.emit('removeItem', currentRoom.value?.id, item)
   }
 
   const sendItemChange = (item: TItem) => {
@@ -54,6 +63,25 @@ export const useConnectionStore = defineStore('connection', () => {
         currentRoom.value.items.splice(index, 1, item)
       }
     })
+
+    $io.on('itemAdded', (item) => {
+      if (currentRoom.value) {
+        currentRoom.value.items.push(item)
+      }
+    })
+
+    $io.on('itemRemoved', (item) => {
+      if (currentRoom.value) {
+        const index = currentRoom.value.items.findIndex(t => t.id === item.id)
+        currentRoom.value.items.splice(index, 1)
+      }
+    })
+
+    $io.on('updateRoom', (room) => {
+      if (currentRoom.value && currentRoom.value.id === room.id) {
+        currentRoom.value = room
+      }
+    })
   })
 
   return {
@@ -64,6 +92,8 @@ export const useConnectionStore = defineStore('connection', () => {
     leaveRoom,
     sendMessage,
     sendItemChange,
-    setName
+    setName,
+    addItem,
+    removeItem
   }
 })

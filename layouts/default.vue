@@ -6,7 +6,11 @@
 </template>
 
 <script setup lang="ts">
+const { leaveRoom } = useConnectionStore()
 
+onUnmounted(() => {
+  leaveRoom()
+})
 </script>
 
 <style scoped>

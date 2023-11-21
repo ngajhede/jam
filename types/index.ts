@@ -1,6 +1,10 @@
+export enum Types {
+  Stickynote = 'stickynote'
+}
+
 export type TItem = {
   id: string
-  type: 'Stickynote',
+  type: Types,
   content: string
   x: number
   y: number

@@ -1,6 +1,6 @@
 import { Server } from 'socket.io'
 import type { TRoom, TUser } from '~/types'
-
+import { Stickynote } from '~/utils/items'
 const io = new Server(3001, {
   cors: {
     origin: '*'
@@ -27,9 +27,9 @@ io.on('connect', (socket) => {
       content: `${socket.id} joined the jam session`
     })
 
-    const board = rooms.find(t => t.id === data.room)
-    if (board) {
-      board.users.push({ name: data.user.name, id: socket.id })
+    const room = rooms.find(t => t.id === data.room)
+    if (room) {
+      room.users.push({ name: data.user.name, id: socket.id })
     } else {
       rooms.push({
         id: data.room,
@@ -39,16 +39,18 @@ io.on('connect', (socket) => {
       })
     }
 
-    socket.emit('joinedRoom', board)
+    socket.emit('joinedRoom', room)
+    io.to(data.room).emit('updateRoom', room)
   })
 
   socket.on('leaveRoom', (room) => {
-    socket.leave(room)
-    io.to(room).emit('leave', {
-      from_id: socket.id,
-      system: true,
-      content: `${socket.id} left the jam session`
-    })
+    if (room) {
+      socket.leave(room.id)
+      room.users = room.users.filter(t => t.id !== socket.id)
+      io.to(room.id).emit('updateRoom', room)
+    }
+
+    socket.broadcast.emit('message', `${socket.id} left`)
   })
 
   socket.on('message', function (room, message) {
@@ -60,12 +62,27 @@ io.on('connect', (socket) => {
     }
   })
 
-  socket.on('add', function (room, item) {
+  socket.on('addItem', function (room, item) {
     console.log(`[Socket.io] add item in ${room}: ${item}`)
     const board = rooms.find(t => t.id === room)
     if (board) {
-      board.items.push(item)
-      io.to(room).emit('add', item)
+      const newItem = {
+        ...Stickynote,
+        id: Math.random().toString(36).substr(2, 9)
+      }
+      board.items.push(newItem)
+      io.to(room).emit('itemAdded', newItem)
+      // Write to DB
+    }
+  })
+
+  socket.on('removeItem', function (room, item) {
+    console.log(`[Socket.io] remove item in ${room}: ${item}`)
+    const board = rooms.find(t => t.id === room)
+    if (board) {
+      const index = board.items.findIndex(t => t.id === item.id)
+      board.items.splice(index, 1)
+      io.to(room).emit('itemRemoved', item)
       // Write to DB
     }
   })
@@ -93,6 +110,13 @@ io.on('connect', (socket) => {
 
   socket.on('disconnecting', () => {
     console.log('disconnected', socket.id)
+    const room = rooms.find(t => t.users.find(u => u.id === socket.id))
+    if (room) {
+      socket.leave(room.id)
+      room.users = room.users.filter(t => t.id !== socket.id)
+      io.to(room.id).emit('updateRoom', room)
+    }
+
     socket.broadcast.emit('message', `${socket.id} left`)
   })
 })
