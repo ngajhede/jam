@@ -13,6 +13,9 @@ export default defineNuxtConfig({
       'trpc-nuxt'
     ]
   },
+  auth: {
+    origin: process.env.AUTH_ORIGIN
+  },
   typescript: {
     shim: false
   },
