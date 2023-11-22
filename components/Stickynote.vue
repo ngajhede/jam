@@ -78,6 +78,7 @@ watch([dx, dy], ([x, y], [oldX, oldY]) => {
 })
 
 watchEffect(() => {
+  if (isDragging.value) { return }
   dx.value = props.item.x
   dy.value = props.item.y
 })

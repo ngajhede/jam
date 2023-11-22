@@ -1,0 +1,31 @@
+# fly.toml app configuration file generated for jam-3 on 2023-11-22T00:50:31+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "jam-3"
+primary_region = "ams"
+
+[build]
+
+[[mounts]]
+  source = "data"
+  destination = "/data"
+  auto_extend_size_threshold = 0
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[services]]
+  internal_port = 3001
+  protocol = 'tcp'
+
+  [[services.ports]]
+    handlers = ['tls', 'http']
+    port = 3001
+
