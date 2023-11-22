@@ -21,7 +21,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      socketIOUrl: process.env.SOCKET_IO_URL
+      socketIOUrl: process.env.SOCKET_IO_URL,
+      nodeEnv: process.env.NODE_ENV
     }
   }
 })

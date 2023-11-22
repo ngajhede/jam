@@ -58,11 +58,14 @@ export const useConnectionStore = defineStore('connection', () => {
         const item = currentRoom.value.items[index]
         item.x = data.item.x
         item.y = data.item.y
+        item.width = data.item.width
+        item.height = data.item.height
         item.content = data.item.content
       }
     })
 
     $io.on('itemAdded', (item) => {
+      console.log(item)
       if (currentRoom.value) {
         currentRoom.value.items.push(item)
       }

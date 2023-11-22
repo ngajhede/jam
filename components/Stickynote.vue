@@ -1,31 +1,35 @@
 <template>
-  <div ref="el" :style="style" class="bg-yellow-500 px-2 text-zinc-800 fixed w-64 rounded-lg shadow">
-    <div ref="handle" class="border-b border-yellow-900 border-opacity-20 py-1 flex items-center justify-between cursor-pointer">
-      <p class="font-bold">
-        Sticky note
-      </p>
-      <button class="px-1" @click="removeItem(item)">
-        X
-      </button>
-    </div>
-    <div class="py-1">
-      <textarea v-model="content" class="w-full h-32 resize-none bg-transparent focus:outline-none" />
-    </div>
-    <div class="text-zinc-700 absolute bottom-2 right-3 left-3">
-      <div class="flex items-center justify-between w-full">
-        <small>
-          {{ item.id }}
-        </small>
-        <small>
-          {{ Math.round(dx) }} x {{ Math.round(dy) }}
-        </small>
+  <div ref="el" :style="[style]" class=" bg-yellow-500 text-zinc-800 fixed rounded-lg shadow">
+    <div :style="whStyle" class="flex flex-col p-2 min-h-[10px] resize overflow-hidden">
+      <div ref="handle" class="border-b border-yellow-900 border-opacity-20 flex items-center justify-between cursor-pointer">
+        <p class="font-bold">
+          Sticky note
+        </p>
+        <button class="px-1" @click="removeItem(item)">
+          X
+        </button>
+      </div>
+      <textarea v-model="content" class="note resize-none bg-transparent focus:outline-none grow p-2" />
+      <div class="text-zinc-700">
+        <div class="flex items-center justify-between w-full">
+          <small>
+            {{ item.id }}
+          </small>
+          <small>
+            {{ Math.round(item.width) }} x {{ Math.round(item.height) }}
+          </small>
+          <small>
+            {{ Math.round(dx) }} x {{ Math.round(dy) }}
+          </small>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useDraggable } from '@vueuse/core'
+import { useDraggable, useElementSize } from '@vueuse/core'
+
 import { Types, type TItem } from '@/types'
 
 const props = defineProps<{
@@ -46,7 +50,9 @@ const content = computed({
       type: Types.Stickynote,
       content: value,
       x: props.item.x,
-      y: props.item.y
+      y: props.item.y,
+      width: props.item.width,
+      height: props.item.height
     })
   }
 })
@@ -56,6 +62,12 @@ const { x: dx, y: dy, style, isDragging } = useDraggable(el, {
   initialValue: { x: props.item.x, y: props.item.y },
   handle
 })
+
+const { width: dw, height: dh } = useElementSize(el)
+const whStyle = computed(() => ({
+  width: `${props.item.width}px`,
+  height: `${props.item.height}px`
+}))
 
 const position = computed({
   get () {
@@ -69,13 +81,37 @@ const position = computed({
       type: Types.Stickynote,
       content: content.value,
       x,
-      y
+      y,
+      width: props.item.width,
+      height: props.item.height
     })
   }
 })
 
-watch([dx, dy], ([x, y], [oldX, oldY]) => {
+const size = computed({
+  get () {
+    return { width: props.item.width, height: props.item.height }
+  },
+  set (value) {
+    const { width, height } = value
+    sendItemChange({
+      id: props.item.id,
+      type: Types.Stickynote,
+      content: content.value,
+      x: props.item.x,
+      y: props.item.y,
+      width,
+      height
+    })
+  }
+})
+
+watch([dx, dy], ([x, y]) => {
   position.value = { x, y }
+})
+
+watch([dw, dh], ([width, height]) => {
+  size.value = { width, height }
 })
 
 watchEffect(() => {
@@ -85,6 +121,16 @@ watchEffect(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.note::-webkit-scrollbar {
+  width: 10px;
+}
 
+.note::-webkit-scrollbar-track {
+  @apply bg-yellow-600;
+}
+
+.note::-webkit-scrollbar-thumb {
+  @apply bg-yellow-500 outline-yellow-900;
+}
 </style>

@@ -74,6 +74,7 @@ export default defineNitroPlugin((nitroApp) => {
           ...Stickynote,
           id: nanoid(6)
         }
+        console.log(newItem)
         board.items.push(newItem)
         io.to(room).emit('itemAdded', newItem)
       // Write to DB
