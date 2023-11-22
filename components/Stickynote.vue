@@ -62,6 +62,7 @@ const position = computed({
     return { x: dx.value, y: dy.value }
   },
   set (value) {
+    if (!isDragging.value) { return }
     const { x, y } = value
     sendItemChange({
       id: props.item.id,
