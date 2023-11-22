@@ -55,6 +55,8 @@ COPY --from=build /app /app
 RUN mkdir -p /data
 VOLUME /data
 
+RUN chmod +x /app/docker-entrypoint.js
+
 # Entrypoint prepares the database.
 ENTRYPOINT [ "/app/docker-entrypoint.js" ]
 
