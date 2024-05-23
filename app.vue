@@ -1,5 +1,3 @@
 <template>
-  <div>
-    <WebSocket />
-  </div>
+  <NuxtPage />
 </template>
