@@ -30,8 +30,9 @@ const handlers: { [type: string]: (peer: Peer, data: any) => void } = {
   message: (peer: Peer, message: string) => {
     if (!checkRoom(peer)) return;
 
-    peer.publish(peer.ctx.room, { type: "message", data: message, peer: peer.ctx.name });
-    peer.send({ type: "message", data: message, peer: peer.ctx.name });
+    const msg = `${peer.ctx.name}: ${message}`;
+    peer.publish(peer.ctx.room, { type: "message", data: msg, peer: peer.ctx.name });
+    peer.send({ type: "message", data: msg, peer: peer.ctx.name });
   },
   joinRoom: (peer: Peer, room: string) => {
     joinRoom(peer, room);

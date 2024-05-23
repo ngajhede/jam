@@ -1,8 +1,9 @@
 export const useWebsocket = () => {
+  const { user } = useAuth();
   const { status, data, send, open, close } = useWebSocket(`ws://${location.host}/api/websocket`);
 
   const history = ref<string[]>([]);
-  const currentName = ref("User");
+  const currentName = ref(user.value?.username || "Anonymous");
   const currentRoom = ref<string | null>(null);
 
   const sendData = (data: { type: string; data: string | any }) => {
@@ -44,7 +45,7 @@ export const useWebsocket = () => {
     },
     message: (data) => {
       console.log(data);
-      history.value.push(`${data.peer}: ${data.data}`);
+      history.value.push(`${data.data}`);
     },
   };
 
