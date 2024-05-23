@@ -1,5 +1,6 @@
 import { Peer } from "crossws";
 import { Room } from "../classes/Room";
+import { BoardElement } from "~/types";
 
 const rooms = new Map<string, Room>();
 
@@ -106,7 +107,7 @@ const setName = (peer: Peer, name: string) => {
   }
 };
 
-const updateElement = (peer: Peer, element: any) => {
+const updateElement = (peer: Peer, element: BoardElement) => {
   if (!checkRoom(peer)) return;
 
   const room = rooms.get(peer.ctx.room);

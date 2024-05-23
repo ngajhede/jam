@@ -28,6 +28,12 @@ export const useWebsocket = () => {
 
   const updateElement = (element: BoardElement) => {
     sendData({ type: "updateElement", data: element });
+    if (room.value) {
+      const index = room.value.elements.findIndex((el) => el.id === element.id);
+      if (index !== -1) {
+        room.value.elements[index] = element;
+      }
+    }
   };
 
   watch(data, (newData) => {
@@ -61,7 +67,6 @@ export const useWebsocket = () => {
       room.value = data.data;
     },
     message: (data) => {
-      console.log(data);
       history.value.push(`${data.data}`);
     },
   };

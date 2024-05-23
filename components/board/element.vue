@@ -26,7 +26,7 @@
       {{ content }}
     </div>
   </vue-resizable>
-  <board-edit-element v-model:isOpen="editIsOpen" @close="editIsOpen = false" v-model:content="content" />
+  <board-edit-element v-model:isOpen="editIsOpen" @close="editIsOpen = false" @update-element="(val) => $emit('updateElement', val)" v-bind:element="element" />
 </template>
 
 <script setup lang="ts">
@@ -50,7 +50,6 @@ const editIsOpen = ref(false);
 const dragSelector = ".drag-handle";
 
 watch(props, (val) => {
-  console.log("props changed", val);
   x.value = val.element.position.x;
   y.value = val.element.position.y;
   width.value = val.element.size.width;

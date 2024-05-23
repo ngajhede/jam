@@ -22,7 +22,6 @@ export default defineEventHandler(async (event) => {
       },
     });
     const githubUser: GitHubUser = await githubUserResponse.json();
-    console.log("githubUser", githubUser);
 
     // Replace this with your own DB client.
     const existingUser = await prisma.user.findFirst({
@@ -30,8 +29,6 @@ export default defineEventHandler(async (event) => {
         github_id: githubUser.id,
       },
     });
-
-    console.log("existingUser", existingUser);
 
     if (existingUser) {
       const session = await lucia.createSession(existingUser.id, {});
