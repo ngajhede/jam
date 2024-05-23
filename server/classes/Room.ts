@@ -11,8 +11,8 @@ export class Room {
     this.elements = [
       {
         id: "12345",
-        position: { x: 0, y: 0 },
-        size: { width: 100, height: 100 },
+        position: { x: 100, y: 100 },
+        size: { width: 250, height: 400 },
         content: "Hello, world!",
       },
     ];

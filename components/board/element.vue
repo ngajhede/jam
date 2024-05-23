@@ -43,22 +43,25 @@ const endHandler = (data) => {
     :height="height"
     :left="x"
     :top="y"
+    :minWidth="150"
+    :minHeight="150"
     @drag:start="isDragging = true"
     @drag:end="endHandler"
     @resize:start="isResizing = true"
     @resize:end="endHandler"
     :fit-parent="true"
-    class="border p-3 bg-yellow-400 rounded-md shadow-lg"
+    class="border flex flex-col bg-yellow-400 rounded-md shadow-lg hover:border-1 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"
     :dragSelector="dragSelector"
     ref="el"
     :class="{
-      'transition-all ease-in-out delay-200': !isDragging && !isResizing,
+      'transition-all ease-in-out delay-200 ': !isDragging && !isResizing,
     }"
   >
-    <div class="resizable-content">
-      <div class="drag-handle">Drag me</div>
-      I am at {{ Math.round(x) }}, {{ Math.round(y) }}. Size: ({{ height }}, {{ width }}) Content: {{ element.content }}
+    <div class="drag-handle select-none flex items-center justify-end space-x-3 rounded-t-md cursor-move inset-0 w-full h-6 bg-yellow-500 bg-[radial-gradient(#fde047_1px,transparent_1px)] [background-size:5px_5px]">
+      <small class="text-gray-600 text-xs">(x: {{ Math.round(x) }}, y: {{ Math.round(y) }})</small>
+      <small class="text-gray-600 text-xs">(h: {{ height }}, w: {{ width }})</small>
     </div>
+    <textarea class="p-3 bg-transparent border-0 w-full h-full resize-none focus:outline-0" v-model="content" />
   </vue-resizable>
 </template>
 
@@ -66,6 +69,5 @@ const endHandler = (data) => {
 .resizable-content {
   height: 100%;
   width: 100%;
-  background-color: aqua;
 }
 </style>
