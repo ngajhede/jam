@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute right-6 bottom-6 flex flex-col justify-between space-y-3 w-64 h-96 bg-gray-800 p-3 text-white rounded-md">
+  <div class="absolute right-6 bottom-6 flex flex-col justify-between space-y-3 w-64 h-96 bg-gray-800 p-3 text-white rounded-md shadow-lg z-10">
     <p>Name: {{ currentName }}</p>
 
     <ul class="h-full border border-gray-700 p-3 rounded-md">
@@ -13,7 +13,6 @@
           data: message,
         })
       "
-      class="flex space-x-2 block"
     >
       <input v-model="message" type="text" placeholder="Type a message..." class="p-2 rounded-md bg-gray-700" />
       <button type="submit">Send</button>
