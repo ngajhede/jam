@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@vueuse/nuxt", "@nuxtjs/tailwindcss"],
+  css: ["@/assets/main.css"],
   nitro: {
     experimental: {
       websocket: true,

@@ -1,45 +1,71 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useDraggable } from "@vueuse/core";
+import VueResizable from "vue-resizable";
 import type { BoardElement } from "~/types";
 
 const props = defineProps<{
   element: BoardElement;
 }>();
-
 const emit = defineEmits(["updateElement"]);
 
-const el = ref<HTMLElement | null>(null);
+const x = ref(props.element.position.x);
+const y = ref(props.element.position.y);
+const width = ref(props.element.size.width);
+const height = ref(props.element.size.height);
+const content = ref(props.element.content);
 
-// `style` will be a helper computed for `left: ?px; top: ?px;`
-const { x, y, style, isDragging } = useDraggable(el, {
-  initialValue: { x: props.element.x, y: props.element.y },
+const isDragging = ref(false);
+const isResizing = ref(false);
+const dragSelector = ".drag-handle";
+
+watch(props, (val) => {
+  console.log("props changed", val);
+  x.value = val.element.position.x;
+  y.value = val.element.position.y;
+  width.value = val.element.size.width;
+  height.value = val.element.size.height;
+  content.value = val.element.content;
 });
 
-watch(props, () => {
-  console.log("element changed", props.element);
-  x.value = props.element.x;
-  y.value = props.element.y;
-});
-
-watch(isDragging, (val) => {
-  if (val) return;
-  emit("updateElement", { ...props.element, x: x.value, y: y.value });
-});
+const endHandler = (data) => {
+  x.value = data.left;
+  y.value = data.top;
+  width.value = data.width;
+  height.value = data.height;
+  isDragging.value = false;
+  isResizing.value = false;
+  emit("updateElement", { ...props.element, position: { x: x.value, y: y.value }, size: { width: width.value, height: height.value } });
+};
 </script>
 
 <template>
-  <div
+  <vue-resizable
+    :width="width"
+    :height="height"
+    :left="x"
+    :top="y"
+    @drag:start="isDragging = true"
+    @drag:end="endHandler"
+    @resize:start="isResizing = true"
+    @resize:end="endHandler"
+    :fit-parent="true"
     class="border p-3 bg-yellow-400 rounded-md shadow-lg"
+    :dragSelector="dragSelector"
     ref="el"
     :class="{
-      'transition-all ease-in-out delay-200': !isDragging,
+      'transition-all ease-in-out delay-200': !isDragging && !isResizing,
     }"
-    :style="style"
-    style="position: fixed"
   >
-    I am at {{ Math.round(x) }}, {{ Math.round(y) }}. Content: {{ element.content }}
-  </div>
+    <div class="resizable-content">
+      <div class="drag-handle">Drag me</div>
+      I am at {{ Math.round(x) }}, {{ Math.round(y) }}. Size: ({{ height }}, {{ width }}) Content: {{ element.content }}
+    </div>
+  </vue-resizable>
 </template>
 
-<style scoped></style>
+<style scoped>
+.resizable-content {
+  height: 100%;
+  width: 100%;
+  background-color: aqua;
+}
+</style>

@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <h1>Room {{ id }}</h1>
-    <WebSocket :room-id="computedId" />
+  <div class="p-12 h-full">
+    <Board :roomId="computedId" />
   </div>
 </template>
 

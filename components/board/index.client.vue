@@ -1,28 +1,9 @@
 <template>
-  <div class="flex items-center">
-    <div>
-      <p>Name: {{ currentName }}</p>
-      <p>Room: {{ roomId }}</p>
-
-      <form
-        @submit.prevent="
-          send({
-            type: 'message',
-            data: message,
-          })
-        "
-      >
-        <input v-model="message" type="text" placeholder="Type a message..." />
-        <button type="submit">Send</button>
-      </form>
-
-      <ul>
-        <li v-for="msg in history" :key="msg">{{ msg }}</li>
-      </ul>
-    </div>
-    <div v-if="room">
+  <div class="h-full bg-gray-100 relative">
+    <DebugContainer :history="history" :room="room" :current-name="currentName" @send-message="send" />
+    <BoardContainer v-if="room">
       <BoardElement v-for="(element, idx) in room.elements" :key="idx" :element="element" @update-element="onElementUpdated" />
-    </div>
+    </BoardContainer>
   </div>
 </template>
 
@@ -42,7 +23,6 @@ const send = (data: { type: string; data: string }) => {
 };
 
 const onElementUpdated = (element: BoardElement) => {
-  console.log("element updated", element);
   updateElement(element);
 };
 
