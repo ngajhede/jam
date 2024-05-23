@@ -2,7 +2,9 @@ import type { BoardElement } from "~/types";
 
 export const useWebsocket = () => {
   const { user } = useAuth();
-  const { status, data, send, open, close } = useWebSocket(`ws://${location.host}/api/websocket`);
+
+  const wsUrl = import.meta.env.DEV ? "ws://localhost:3000/api/websocket" : `wss://${location.host}/api/websocket`;
+  const { status, data, send, open, close } = useWebSocket(wsUrl);
 
   const history = ref<string[]>([]);
   const currentName = ref(user.value?.username || "Anonymous");
