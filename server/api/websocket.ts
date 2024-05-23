@@ -1,11 +1,8 @@
 import { Peer } from "crossws";
 
-const room = "ROOM";
-
 export default defineWebSocketHandler({
   open(peer) {
     console.log("WebSocket opened", peer);
-    initPeer(peer, "Anonymous", room);
   },
   close(peer) {
     console.log("WebSocket closed", peer);
@@ -28,24 +25,48 @@ export default defineWebSocketHandler({
   },
 });
 
-const initPeer = (peer: Peer, name: string, room: string) => {
-  setName(peer, name);
-  peer.subscribe(room);
-};
-
 // Object literal with all methods mapped to message types
 const handlers: { [type: string]: (peer: Peer, data: any) => void } = {
   message: (peer: Peer, message: string) => {
-    peer.publish(room, { type: "message", data: message, peer: peer.ctx.name });
+    if (!checkRoom(peer)) return;
+
+    peer.publish(peer.ctx.room, { type: "message", data: message, peer: peer.ctx.name });
     peer.send({ type: "message", data: message, peer: peer.ctx.name });
+  },
+  joinRoom: (peer: Peer, room: string) => {
+    joinRoom(peer, room);
   },
   setName: (peer: Peer, name: string) => {
     setName(peer, name);
   },
+  initMe: (peer: Peer, { name, room }: { name: string; room: string }) => {
+    initPeer(peer, name, room);
+  },
+};
+
+const initPeer = (peer: Peer, name: string, room: string) => {
+  setName(peer, name);
+  joinRoom(peer, room);
+};
+
+const joinRoom = (peer: Peer, room: string) => {
+  peer.subscribe(room);
+  peer.ctx.room = room;
+  peer.send({ type: "roomJoined", data: room });
+  peer.publish(room, { type: "message", data: `${peer.ctx.name} joined the room` });
 };
 
 // Custom method
 const setName = (peer: Peer, name: string) => {
   peer.ctx.name = name;
   peer.send({ type: "nameSet", data: peer.ctx.name });
+};
+
+const checkRoom = (peer: Peer) => {
+  if (!peer.ctx.room) {
+    peer.send({ type: "error", data: "You must join a room first" });
+    return false;
+  }
+
+  return true;
 };

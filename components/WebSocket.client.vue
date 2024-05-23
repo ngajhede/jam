@@ -1,21 +1,10 @@
 <template>
-  <div>Websocket! Wohoo</div>
   <p>Name: {{ currentName }}</p>
+  <p>Room: {{ roomId }}</p>
 
   <form
     @submit.prevent="
-      sendData({
-        type: 'setName',
-        data: newName,
-      })
-    "
-  >
-    <input v-model="newName" type="text" placeholder="Type a name..." />
-    <button type="submit">Send</button>
-  </form>
-  <form
-    @submit.prevent="
-      sendData({
+      send({
         type: 'message',
         data: message,
       })
@@ -31,46 +20,20 @@
 </template>
 
 <script setup lang="ts">
-// In prod: check if secure or not
-const { status, data, send, open, close } = useWebSocket(`ws://${location.host}/api/websocket`);
+const { currentName, history, sendData, initMe } = useWebsocket();
 
-const currentName = ref("");
-const newName = ref("");
+const props = defineProps<{
+  roomId: string;
+}>();
+
 const message = ref("");
-const history = ref<string[]>([]);
 
-const sendData = (data: { type: string; data: string }) => {
-  send(JSON.stringify(data));
+const send = (data: { type: string; data: string }) => {
+  sendData(data);
   message.value = "";
 };
 
-watch(data, (newData) => {
-  if (newData) {
-    console.log("newData", newData);
-    const data = JSON.parse(newData);
-    console.log("data", data);
-    if (handlers[data.type]) {
-      handlers[data.type](data);
-    }
-  }
+onMounted(() => {
+  initMe(props.roomId);
 });
-
-const handlers: { [type: string]: (data: any) => void } = {
-  open: (data) => {
-    console.log("Connection opened", data);
-  },
-  close: () => {
-    console.log("Connection closed");
-  },
-  error: () => {
-    console.log("Error");
-  },
-  nameSet: (data) => {
-    currentName.value = data.data;
-  },
-  message: (data) => {
-    console.log(data);
-    history.value.push(`${data.peer}: ${data.data}`);
-  },
-};
 </script>
