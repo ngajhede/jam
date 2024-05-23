@@ -1,4 +1,7 @@
 import { Peer } from "crossws";
+import { Room } from "../classes/Room";
+
+const rooms = new Map<string, Room>();
 
 export default defineWebSocketHandler({
   open(peer) {
@@ -6,6 +9,14 @@ export default defineWebSocketHandler({
   },
   close(peer) {
     console.log("WebSocket closed", peer);
+    if (peer.ctx.room) {
+      const room = rooms.get(peer.ctx.room);
+      if (room) {
+        room.removePeer(peer);
+        peer.publish(peer.ctx.room, { type: "message", data: `${peer.ctx.name} left the room` });
+        updateRoom(peer, room);
+      }
+    }
   },
   error(peer, error) {
     console.log("WebSocket error", peer, error);
@@ -43,6 +54,9 @@ const handlers: { [type: string]: (peer: Peer, data: any) => void } = {
   initMe: (peer: Peer, { name, room }: { name: string; room: string }) => {
     initPeer(peer, name, room);
   },
+  updateElement: (peer: Peer, element: any) => {
+    updateElement(peer, element);
+  },
 };
 
 const initPeer = (peer: Peer, name: string, room: string) => {
@@ -51,16 +65,64 @@ const initPeer = (peer: Peer, name: string, room: string) => {
 };
 
 const joinRoom = (peer: Peer, room: string) => {
+  if (peer.ctx.room) {
+    peer.send({ type: "error", data: "You are already in a room" });
+    return;
+  }
+
+  if (!rooms.has(room)) {
+    rooms.set(room, new Room(room));
+  }
+
+  const roomInstance = rooms.get(room);
+  if (!roomInstance) {
+    peer.send({ type: "error", data: "Room not found" });
+    return;
+  }
+
+  roomInstance.addPeer(peer);
   peer.subscribe(room);
   peer.ctx.room = room;
-  peer.send({ type: "roomJoined", data: room });
+  peer.send({
+    type: "roomJoined",
+    data: {
+      name: roomInstance.name,
+      elements: roomInstance.elements,
+      peers: roomInstance.peers.map((p) => p.ctx.name),
+    },
+  });
   peer.publish(room, { type: "message", data: `${peer.ctx.name} joined the room` });
+  updateRoom(peer, roomInstance);
 };
 
 // Custom method
 const setName = (peer: Peer, name: string) => {
   peer.ctx.name = name;
   peer.send({ type: "nameSet", data: peer.ctx.name });
+
+  const room = rooms.get(peer.ctx.room);
+  if (room) {
+    updateRoom(peer, room);
+  }
+};
+
+const updateElement = (peer: Peer, element: any) => {
+  if (!checkRoom(peer)) return;
+
+  const room = rooms.get(peer.ctx.room);
+  if (!room) {
+    peer.send({ type: "error", data: "Room not found" });
+    return;
+  }
+
+  const existingElement = room.elements.find((e) => e.id === element.id);
+  if (!existingElement) {
+    peer.send({ type: "error", data: "Element not found" });
+    return;
+  }
+
+  Object.assign(existingElement, element);
+  updateRoom(peer, room);
 };
 
 const checkRoom = (peer: Peer) => {
@@ -70,4 +132,15 @@ const checkRoom = (peer: Peer) => {
   }
 
   return true;
+};
+
+const updateRoom = (peer: Peer, room: Room) => {
+  peer.publish(peer.ctx.room, {
+    type: "roomUpdated",
+    data: {
+      name: room.name,
+      elements: room.elements,
+      peers: room.peers.map((p) => p.ctx.name),
+    },
+  });
 };
