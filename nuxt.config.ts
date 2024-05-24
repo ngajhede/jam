@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@vueuse/nuxt", "@nuxtjs/tailwindcss"],
-  css: ["@/assets/main.css"],
+  css: ["@/assets/main.css", "vue-draggable-resizable/style.css"],
   nitro: {
     experimental: {
       websocket: true,

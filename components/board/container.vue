@@ -1,5 +1,5 @@
 <template>
-  <div class="border p-3 bg-zinc-50 rounded-md h-full">
+  <div class="relative border p-3 bg-zinc-50 rounded-md h-full">
     <slot />
   </div>
 </template>

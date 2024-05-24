@@ -58,6 +58,9 @@ const handlers: { [type: string]: (peer: Peer, data: any) => void } = {
   updateElement: (peer: Peer, element: any) => {
     updateElement(peer, element);
   },
+  addElement: (peer: Peer, element: BoardElement) => {
+    addElement(peer, element);
+  },
 };
 
 const initPeer = (peer: Peer, name: string, room: string) => {
@@ -126,6 +129,24 @@ const updateElement = (peer: Peer, element: BoardElement) => {
   updateRoom(peer, room);
 };
 
+const addElement = (peer: Peer, element: BoardElement) => {
+  if (!checkRoom(peer)) return;
+
+  const room = rooms.get(peer.ctx.room);
+  if (!room) {
+    peer.send({ type: "error", data: "Room not found" });
+    return;
+  }
+
+  room.elements.push({
+    ...element,
+    id: Math.random().toString(36).substring(7),
+  });
+
+  console.log("Added element", element, room.elements);
+  updateRoom(peer, room);
+};
+
 const checkRoom = (peer: Peer) => {
   if (!peer.ctx.room) {
     peer.send({ type: "error", data: "You must join a room first" });
@@ -136,12 +157,17 @@ const checkRoom = (peer: Peer) => {
 };
 
 const updateRoom = (peer: Peer, room: Room) => {
+  const payload = {
+    name: room.name,
+    elements: room.elements,
+    peers: room.peers.map((p) => p.ctx.name),
+  };
   peer.publish(peer.ctx.room, {
     type: "roomUpdated",
-    data: {
-      name: room.name,
-      elements: room.elements,
-      peers: room.peers.map((p) => p.ctx.name),
-    },
+    data: payload,
+  });
+  peer.send({
+    type: "roomUpdated",
+    data: payload,
   });
 };

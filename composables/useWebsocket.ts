@@ -38,6 +38,10 @@ export const useWebsocket = () => {
     }
   };
 
+  const addElement = (element: BoardElement) => {
+    sendData({ type: "addElement", data: element });
+  };
+
   watch(data, (newData) => {
     if (newData) {
       const parsedData = JSON.parse(newData);
@@ -90,5 +94,6 @@ export const useWebsocket = () => {
     joinRoom,
     initMe,
     updateElement,
+    addElement,
   };
 };

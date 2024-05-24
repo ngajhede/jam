@@ -6,12 +6,13 @@
     :top="y"
     :minWidth="150"
     :minHeight="150"
+    :fitParent="true"
     @drag:start="isDragging = true"
     @drag:end="endHandler"
     @resize:start="isResizing = true"
     @resize:end="endHandler"
-    :fit-parent="true"
     class="border flex flex-col bg-yellow-400 rounded-md shadow-lg hover:border-1 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"
+    style="position: absolute"
     :dragSelector="dragSelector"
     ref="el"
     :class="{
@@ -26,7 +27,6 @@
       {{ content }}
     </div>
   </vue-resizable>
-  <board-edit-element v-model:isOpen="editIsOpen" @close="editIsOpen = false" @update-element="(val) => $emit('updateElement', val)" v-bind:element="element" />
 </template>
 
 <script setup lang="ts">
@@ -68,9 +68,4 @@ const endHandler = (data) => {
 };
 </script>
 
-<style scoped>
-.resizable-content {
-  height: 100%;
-  width: 100%;
-}
-</style>
+<style scoped></style>
