@@ -2,6 +2,11 @@
   <div class="h-full bg-gray-100 relative">
     <BoardContainer v-if="room">
       <Participants :peers="room?.peers" />
+      <div class="absolute p-3 top-0 right-0">
+        <p>Double click content to edit</p>
+        <p>Drag top of notes to move</p>
+        <p>Drag corners of notes to resize</p>
+      </div>
       <BoardElement v-for="element in room.elements" :key="element.id" :element="element" @update-element="onElementUpdated" />
       <Toolbar @add-element="onElementAdded" />
     </BoardContainer>
