@@ -10,7 +10,15 @@
           </DialogClose>
         </header>
         <form @submit.prevent="onUpdateElement" class="space-y-3">
-          <textarea ref="textarea" id="content" v-model="localContent" class="w-full h-72 bg-gray-50 rounded-md border p-3 resize-none" placeholder="Enter your note here"></textarea>
+          <textarea ref="textarea" id="content" v-model="localContent" class="w-full h-72 bg-gray-50 rounded-md border p-3 resize-none focus:outline-none" placeholder="Enter your note here" :class="colors[localColor]"></textarea>
+          <div>
+            <div class="flex space-x-3">
+              <button type="button" @click="localColor = 'yellow'" :class="{ 'border-blue-500': localColor === 'yellow' }" class="bg-yellow-400 w-6 h-6 rounded-full border-2"></button>
+              <button type="button" @click="localColor = 'blue'" :class="{ 'border-blue-500': localColor === 'blue' }" class="bg-blue-400 w-6 h-6 rounded-full border-2"></button>
+              <button type="button" @click="localColor = 'green'" :class="{ 'border-blue-500': localColor === 'green' }" class="bg-green-400 w-6 h-6 rounded-full border-2"></button>
+              <button type="button" @click="localColor = 'red'" :class="{ 'border-blue-500': localColor === 'red' }" class="bg-red-400 w-6 h-6 rounded-full border-2"></button>
+            </div>
+          </div>
           <div class="flex justify-end space-x-3">
             <DialogClose as-child>
               <button type="button" class="px-2 py-1 bg-gray-100 hover:bg-gray-200 transition duration-75 ease-linear rounded-md">Cancel</button>
@@ -27,11 +35,13 @@
 import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger } from "radix-vue";
 import { X } from "lucide-vue-next";
 import type { BoardElement } from "~/types";
+import colors from "~/utils/colors";
 
 const element = defineModel<BoardElement>("element");
 const isOpen = defineModel<boolean>("isOpen");
 
 const localContent = ref(element.value?.content);
+const localColor = ref<BoardElement["color"] | undefined>(element.value?.color);
 const textarea = ref<HTMLTextAreaElement | null>(null);
 
 const emit = defineEmits(["close", "update-element"]);
@@ -54,6 +64,7 @@ const onUpdateElement = () => {
   emit("update-element", {
     ...element.value,
     content: localContent.value,
+    color: localColor.value,
   });
   emit("close");
 };

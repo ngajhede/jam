@@ -10,7 +10,15 @@
           </DialogClose>
         </header>
         <form @submit.prevent="onAddElement" class="space-y-3">
-          <textarea ref="textarea" id="content" v-model="content" class="w-full h-72 bg-gray-50 rounded-md border p-3 resize-none" placeholder="Enter your note here"></textarea>
+          <textarea ref="textarea" id="content" v-model="content" class="w-full h-72 bg-gray-50 rounded-md border p-3 resize-none focus:outline-none" placeholder="Enter your note here" :class="colors[color]"></textarea>
+          <div>
+            <div class="flex space-x-3">
+              <button type="button" @click="color = 'yellow'" :class="{ 'border-blue-500': color === 'yellow' }" class="bg-yellow-400 w-6 h-6 rounded-full border-2"></button>
+              <button type="button" @click="color = 'blue'" :class="{ 'border-blue-500': color === 'blue' }" class="bg-blue-400 w-6 h-6 rounded-full border-2"></button>
+              <button type="button" @click="color = 'green'" :class="{ 'border-blue-500': color === 'green' }" class="bg-green-400 w-6 h-6 rounded-full border-2"></button>
+              <button type="button" @click="color = 'red'" :class="{ 'border-blue-500': color === 'red' }" class="bg-red-400 w-6 h-6 rounded-full border-2"></button>
+            </div>
+          </div>
           <div class="flex justify-end space-x-3">
             <DialogClose as-child>
               <button type="button" class="px-2 py-1 bg-gray-100 hover:bg-gray-200 transition duration-75 ease-linear rounded-md">Cancel</button>
@@ -26,10 +34,13 @@
 <script setup lang="ts">
 import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger } from "radix-vue";
 import { X } from "lucide-vue-next";
+import type { BoardElement } from "~/types";
+import colors from "~/utils/colors";
 
 const isOpen = defineModel<boolean>("isOpen");
 
 const content = ref();
+const color = ref<BoardElement["color"]>("yellow");
 const textarea = ref<HTMLTextAreaElement | null>(null);
 
 const emit = defineEmits(["close", "add-element"]);
@@ -56,9 +67,11 @@ const onAddElement = () => {
     },
     size: { width: 200, height: 200 },
     content: content.value,
+    color: color.value,
   });
   emit("close");
   content.value = "";
+  color.value = "yellow";
 };
 </script>
 

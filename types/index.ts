@@ -9,4 +9,5 @@ export type BoardElement = {
     height: number;
   };
   content: string;
+  color: "yellow" | "blue" | "green" | "red";
 };

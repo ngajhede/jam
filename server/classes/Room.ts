@@ -13,7 +13,8 @@ export class Room {
         id: "12345",
         position: { x: 100, y: 100 },
         size: { width: 250, height: 400 },
-        content: "Hello, world!",
+        content: "Hello OC!",
+        color: "yellow",
       },
     ];
     this.peers = [];
