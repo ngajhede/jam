@@ -4,7 +4,7 @@
       <small class="text-gray-600 text-xs">(x: {{ Math.round(x) }}, y: {{ Math.round(y) }})</small>
       <small class="text-gray-600 text-xs">(h: {{ Math.round(height) }}, w: {{ Math.round(width) }})</small>
     </div>
-    <div v-on:dblclick="editIsOpen = true" class="p-3 bg-transparent border-0 w-full h-full resize-none focus:outline-0">{{ content }}</div>
+    <div v-on:dblclick="editIsOpen = true" class="p-3 bg-transparent border-0 w-full h-full resize-none focus:outline-0 overflow-y-auto">{{ content }}</div>
   </vue-resizable>
   <board-edit-element v-model:isOpen="editIsOpen" v-bind:element="element" @close="editIsOpen = false" @update-element="(val: BoardElement) => $emit('updateElement', val)" />
 </template>
