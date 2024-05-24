@@ -21,7 +21,7 @@
   >
     <div class="drag-handle select-none flex items-center justify-end space-x-3 rounded-t-md cursor-move inset-0 w-full h-6 bg-yellow-500 bg-[radial-gradient(#fde047_1px,transparent_1px)] [background-size:5px_5px]">
       <small class="text-gray-600 text-xs">(x: {{ Math.round(x) }}, y: {{ Math.round(y) }})</small>
-      <small class="text-gray-600 text-xs">(h: {{ height }}, w: {{ width }})</small>
+      <small class="text-gray-600 text-xs">(h: {{ Math.round(height) }}, w: {{ Math.round(width) }})</small>
     </div>
     <div v-on:dblclick="editIsOpen = true" class="p-3 bg-transparent border-0 w-full h-full resize-none focus:outline-0">
       {{ content }}
