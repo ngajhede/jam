@@ -11,7 +11,7 @@
     @drag:end="endHandler"
     @resize:start="isResizing = true"
     @resize:end="endHandler"
-    class="border flex flex-col bg-yellow-400 rounded-md shadow-lg hover:border-1 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"
+    class="border flex flex-col bg-yellow-400 rounded-md shadow-lg"
     style="position: absolute"
     :dragSelector="dragSelector"
     ref="el"
@@ -27,6 +27,7 @@
       {{ content }}
     </div>
   </vue-resizable>
+  <board-edit-element v-model:isOpen="editIsOpen" v-bind:element="element" @close="editIsOpen = false" @update-element="(val: BoardElement) => $emit('updateElement', val)" />
 </template>
 
 <script setup lang="ts">

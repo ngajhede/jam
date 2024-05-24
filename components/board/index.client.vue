@@ -1,10 +1,10 @@
 <template>
   <div class="h-full bg-gray-100 relative">
-    <DebugContainer :history="history" :room="room" :current-name="currentName" @send-message="send" />
-    <BoardContainer v-if="room" class="relative">
-      <BoardElement class="absolute" v-for="element in room.elements" :key="element.id" :element="element" @update-element="onElementUpdated" />
+    <BoardContainer v-if="room">
+      <BoardElement v-for="element in room.elements" :key="element.id" :element="element" @update-element="onElementUpdated" />
+      <Toolbar @add-element="onElementAdded" />
     </BoardContainer>
-    <Toolbar @add-element="onElementAdded" />
+    <DebugContainer :history="history" :room="room" :current-name="currentName" @send-message="send" />
   </div>
 </template>
 
