@@ -1,6 +1,7 @@
 <template>
   <div class="h-full bg-gray-100 relative">
     <BoardContainer v-if="room">
+      <Participants :peers="room?.peers" />
       <BoardElement v-for="element in room.elements" :key="element.id" :element="element" @update-element="onElementUpdated" />
       <Toolbar @add-element="onElementAdded" />
     </BoardContainer>
